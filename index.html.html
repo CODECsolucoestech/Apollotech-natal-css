@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Natal Piscante!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 1. Configuração do Cenário e Neve */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a1f2e;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(white 2px, transparent 3px),
+                radial-gradient(white 1px, transparent 2px);
+            background-size: 50px 50px, 100px 100px;
+            background-position: 0 0, 25px 25px;
+            animation: cairNeve 5s linear infinite;
+            font-family: 'Mountains of Christmas', cursive;
+        }
+
+        /* 2. Container da Árvore */
+        .arvore {
+            position: relative;
+            width: 120px; 
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 3. Camadas da Árvore */
+        .camada {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            margin: -20px auto 0;
+            position: relative;
+            z-index: 2;
+        }
+        .camada.topo { border-bottom: 60px solid #27ae60; border-width: 0 40px 60px 40px; }
+        .camada.meio { border-bottom: 70px solid #2ecc71; border-width: 0 50px 70px 50px; }
+        .camada.base { border-bottom: 80px solid #27ae60; border-width: 0 60px 80px 60px; }
+
+        /* 4. Tronco */
+        .tronco {
+            width: 20px;
+            height: 30px;
+            background: #795548;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 5. A Estrela */
+        .estrela {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 20px solid #f1c40f;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            animation: brilhar 1.5s ease-in-out infinite alternate;
+        }
+        .estrela:after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 20px solid #f1c40f;
+            position: absolute;
+            top: 6px;
+            left: -10px;
+        }
+
+        /* 6. Luzes de Natal */
+        .luz {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            z-index: 4;
+            box-shadow: 0 0 5px currentColor;
+            animation: piscarLuzes 1s infinite alternate;
+        }
+        .l1 { top: 45px; left: 45%; background: #ff3333; animation-delay: 0.1s; }
+        .l2 { top: 55px; left: 60%; background: #3366ff; animation-delay: 0.3s; }
+        .l3 { top: 75px; left: 35%; background: #ffff33; animation-delay: 0.5s; }
+        .l4 { top: 90px; left: 55%; background: #ff33ff; animation-delay: 0.7s; }
+        .l5 { top: 105px; left: 70%; background: #33ff33; animation-delay: 0.2s; }
+        .l6 { top: 120px; left: 30%; background: #ff6600; animation-delay: 0.6s; }
+        .l7 { top: 135px; left: 50%; background: #33ccff; animation-delay: 0.4s; }
+
+        /* 7. MENSAGEM DE FELIZ NATAL (ATUALIZADO) */
+        .mensagem {
+            position: absolute;
+            bottom: -80px;
+            width: 300px;
+            left: 50%;
+            transform: translateX(-50%); /* Mantém centralizado */
+            text-align: center;
+            color: #fff;
+            font-size: 32px;
+            opacity: 0;
+            
+            /* --- MÚLTIPLAS ANIMAÇÕES AQUI --- */
+            animation: 
+                /* 1ª animação: Entrada (sobe e aparece) */
+                subirTexto 2s ease-out 1s forwards,
+                
+                /* 2ª animação: Piscar (começa depois de 3s, quando a entrada termina) */
+                piscarTexto 1.5s ease-in-out infinite alternate 3s;
+        }
+
+        /* 8. Animações */
+        @keyframes cairNeve {
+            0% { background-position: 0 0, 25px 25px; }
+            100% { background-position: 25px 50px, 50px 150px; }
+        }
+        @keyframes brilhar {
+            0% { transform: translateX(-50%) scale(1); filter: drop-shadow(0 0 5px #f1c40f); }
+            100% { transform: translateX(-50%) scale(1.3); filter: drop-shadow(0 0 15px #ffeb3b); }
+        }
+        
+        /* Renomeei para evitar conflitos */
+        @keyframes piscarLuzes {
+            0% { opacity: 0.4; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        @keyframes subirTexto {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* NOVA animação exclusiva para o texto piscar (focada em brilho e opacidade) */
+        @keyframes piscarTexto {
+            0% { 
+                opacity: 0.7;
+                text-shadow: 0 0 5px #ff3333;
+            }
+            100% { 
+                opacity: 1;
+                text-shadow: 0 0 20px #ff0000, 0 0 30px #ffff33; /* Brilho mais forte */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="arvore">
+        <div class="estrela"></div>
+        <div class="camada topo"></div>
+        <div class="camada meio"></div>
+        <div class="camada base"></div>
+        <div class="tronco"></div>
+        <div class="luz l1"></div>
+        <div class="luz l2"></div>
+        <div class="luz l3"></div>
+        <div class="luz l4"></div>
+        <div class="luz l5"></div>
+        <div class="luz l6"></div>
+        <div class="luz l7"></div>
+        <div class="mensagem">Feliz Natal!</div>
+    </div>
+
+</body>
+</html>
